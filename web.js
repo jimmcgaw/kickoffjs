@@ -21,14 +21,14 @@ app.get('/members', function(request, response) {
       if (error) {
         console.log(error);
       } else {
-        var members = select(dom, "h5.member-name a"),
+        var members = select(dom, "#rsvp-list h5.member-name a"),
             i;
         console.log("Found " + members.length + " members.");
         member_list = _.map(members, function(member){
           return { "name" : member.children[0].raw };
         });
         var view = { "members" : member_list };
-        response.end(mustache.render("<!DOCTYPE html><html><head></head><body><h2>Found {{members.length}} member(s):</h2><br />{{#members}}{{ name }}<br />{{/members}}</body></html>", view));
+        response.end(mustache.render("<!DOCTYPE html><html><head></head><body><h2>{{members.length}} member(s) are attending:</h2><br />{{#members}}{{ name }}<br />{{/members}}</body></html>", view));
       }
     });
     var parser = new htmlparser.Parser(handler);
