@@ -11,7 +11,7 @@ app.use(express.logger());
 var KICKOFF_URL = "http://www.meetup.com/Santa-Barbara-JavaScript-Meetup/events/125332992/";
 
 app.get('/', function(request, response) {
-  response.end("Hello");
+  response.end("<!DOCTYPE html><html><head></head><body><h1>JavaScript Kickoff Member List</h1><br /><a href='/members'>Load member list</a></body></html>");
 });
 
 app.get('/members', function(request, response) {
