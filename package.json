@@ -6,6 +6,7 @@
     "request" : "x",
     "htmlparser" : "x",
     "underscore" : "x",
+    "soupselect" : "x",
     "mustache" : "0.7.2"
   },
   "engines": {
