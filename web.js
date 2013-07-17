@@ -17,22 +17,25 @@ app.get('/', function(request, response) {
 });
 
 app.get('/members', function(request, response) {
-  var member_list = [];
+  // go fetch contents of Meetup event page
   rq.get(KICKOFF_URL, function(error, res, body){
+    // set up html parser handler
     var handler = new htmlparser.DefaultHandler(function(error, dom){
       if (error) {
         console.log(error);
       } else {
+        // grab member names from the DOM and build a list of objects
         var members = select(dom, "#rsvp-list h5.member-name a");
-        member_list = _.map(members, function(member){
+        var member_list = _.map(members, function(member){
           return { "name" : member.children[0].raw };
         });
-
+        // send the member_list as JSON
         response.writeHead(200, { 'Content-Type': 'application/json' });
         response.write(JSON.stringify(member_list));
         response.end();
       }
     });
+    // create HTML Parser and parse the response text
     var parser = new htmlparser.Parser(handler);
     parser.parseComplete(body);
   });
