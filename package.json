@@ -7,7 +7,8 @@
     "htmlparser" : "x",
     "underscore" : "x",
     "soupselect" : "x",
-    "mustache" : "0.7.2"
+    "mustache" : "0.7.2",
+    "mongodb" : "1.1.11"
   },
   "engines": {
     "node": "0.8.1",

@@ -3,6 +3,10 @@ var express = require("express");
 var htmlparser = require("htmlparser");
 var select = require('soupselect').select;
 var _ = require('underscore');
+var fs = require("fs");
+
+var mongo = require('mongodb');
+var mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/mydb';
 
 var app = express();
 app.use(express.logger());
@@ -39,6 +43,23 @@ app.get('/members', function(request, response) {
     var parser = new htmlparser.Parser(handler);
     parser.parseComplete(body);
   });
+});
+
+// attempting to write some junk into a MongoDB collection
+app.get('/fetch_blogs', function(request, response){
+
+  mongo.Db.connect(mongoUri, function (err, db) {
+    db.collection('feedlist', function(er, collection) {
+      fs.readFileSync("feedlist.txt").toString().split('\n').forEach(function(line) {
+        if (line != "") {
+          console.log(line);
+          collection.insert({'url': line }, { }, function(er,rs) {});
+        }
+      });
+    });
+  });
+
+  response.end();
 });
 
 var port = process.env.PORT || 5000;
